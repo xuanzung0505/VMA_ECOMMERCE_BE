@@ -3,6 +3,7 @@ import router from "./routes";
 
 import httpStatus from "http-status";
 import logger from "./utils/logger";
+import cors from "cors";
 
 const app = express();
 
@@ -10,6 +11,8 @@ const app = express();
 app.use(express.json());
 // parse urlencoded request body
 app.use(express.urlencoded({ extended: true }));
+//cors
+app.use(cors());
 
 //api
 app.use("/api", router);

@@ -1,10 +1,10 @@
+import { omit } from "lodash";
 import UserModel from "../models/user.model";
 import logger from "../utils/logger";
 
-const create = async (body: any) => {
-  const filter = body.email;
-  const user = new UserModel(body);
-
+const create = (body: any) => {
+  let user = new UserModel(body);
+  // const filter = body.email;
   // const user = UserModel.findOneAndUpdate(filter, body, {
   //   new: true,
   //   timestamps: false,
@@ -12,7 +12,7 @@ const create = async (body: any) => {
   // logger.info(user);
 
   try {
-    await user.save();
+    user = user.save();
   } catch (error: any) {
     logger.error(error.message);
     return error.message;

@@ -1,5 +1,6 @@
 import express from "express";
 import { userRouter } from "./user.route";
+import { categoryRouter } from "./category.route";
 
 const router = express.Router({ caseSensitive: true });
 
@@ -7,6 +8,10 @@ const defaultRoutes = [
   {
     path: "/user",
     route: userRouter,
+  },
+  {
+    path: "/category",
+    route: categoryRouter,
   },
 ];
 
