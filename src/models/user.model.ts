@@ -7,6 +7,8 @@ import { paginate } from "./plugins";
 export interface UserDocument extends mongoose.Document {
   email: string;
   name: string;
+  tel: string;
+  userType: string;
   password: string;
   createdAt: Date;
   updatedAt: Date;
@@ -16,6 +18,8 @@ const userSchema = new mongoose.Schema(
   {
     email: { type: String, require: true, unique: true },
     name: { type: String, require: true },
+    tel: { type: String, require: true },
+    userType: { type: String, require: true },
     password: { type: String, require: true },
   },
   {
