@@ -17,4 +17,10 @@ router
     categoryController.create
   );
 
+router.route("/:categoryId").get(
+  validate(categoryValidation.getById),
+  //
+  categoryController.getById
+);
+
 export const categoryRouter = router;

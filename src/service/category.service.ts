@@ -25,7 +25,16 @@ const getList = async () => {
   return data;
 };
 
+const getById = async (categoryId: any) => {
+  const data = CategoryModel.findOne({
+    _id: categoryId,
+    deletedById: { $exists: false },
+  });
+  return data;
+};
+
 export const categoryService = {
   create,
   getList,
+  getById,
 };
