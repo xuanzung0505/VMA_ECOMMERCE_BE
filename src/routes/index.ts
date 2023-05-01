@@ -1,6 +1,7 @@
 import express from "express";
 import { userRouter } from "./user.route";
 import { categoryRouter } from "./category.route";
+import { productRouter } from "./product.route";
 
 const router = express.Router({ caseSensitive: true });
 
@@ -12,6 +13,10 @@ const defaultRoutes = [
   {
     path: "/category",
     route: categoryRouter,
+  },
+  {
+    path: "/product",
+    route: productRouter,
   },
 ];
 

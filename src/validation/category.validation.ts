@@ -16,6 +16,21 @@ const create = object({
   }),
 });
 
+const getList = object({
+  query: object({
+    isActive: string()
+      .refine(
+        (data) => {
+          return data == "true" || data == "false";
+        },
+        {
+          message: "isActive must be boolean",
+        }
+      )
+      .optional(),
+  }),
+});
+
 const getById = object({
   params: object({
     categoryId: string({
@@ -33,5 +48,6 @@ const getById = object({
 
 export const categoryValidation = {
   create,
+  getList,
   getById,
 };

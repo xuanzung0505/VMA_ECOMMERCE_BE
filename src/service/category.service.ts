@@ -20,8 +20,13 @@ const create = (body: any) => {
   return category;
 };
 
-const getList = async () => {
-  const data = CategoryModel.paginate();
+const getList = async (filter: any, options: any) => {
+  const data = CategoryModel.paginate(
+    {
+      ...filter,
+    },
+    { ...options }
+  );
   return data;
 };
 

@@ -9,6 +9,7 @@ router
   .route("/")
   .get(
     //
+    validate(categoryValidation.getList),
     categoryController.getList
   )
   .post(

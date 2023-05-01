@@ -3,6 +3,7 @@ import logger from "../utils/logger";
 import bcrypt from "bcrypt";
 import config from "config";
 import { paginate } from "./plugins";
+import { TABLE_USER } from "../config/table";
 
 export interface UserDocument extends mongoose.Document {
   email: string;
@@ -51,6 +52,6 @@ userSchema.pre("save", async function (next: any) {
 //plugin
 userSchema.plugin(paginate);
 
-const UserModel = mongoose.model("user", userSchema);
+const UserModel = mongoose.model(TABLE_USER, userSchema);
 
 export default UserModel;

@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { paginate } from "./plugins";
+import { TABLE_CATEGORY } from "../config/table";
 
 export interface CategoryDocument extends mongoose.Document {
   title: string;
@@ -20,11 +21,11 @@ const categorySchema = new mongoose.Schema(
   }
 );
 
-//pre hooks
-
 //plugin
 categorySchema.plugin(paginate);
 
-const CategoryModel = mongoose.model("category", categorySchema);
+//pre hooks
+
+const CategoryModel = mongoose.model(TABLE_CATEGORY, categorySchema);
 
 export default CategoryModel;
