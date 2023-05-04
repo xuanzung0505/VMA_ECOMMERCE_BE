@@ -2,7 +2,7 @@ import { omit } from "lodash";
 import UserModel from "../models/user.model";
 import logger from "../utils/logger";
 
-const create = (body: any) => {
+const create = async (body: any) => {
   let user = new UserModel(body);
   // const filter = body.email;
   // const user = UserModel.findOneAndUpdate(filter, body, {
@@ -26,7 +26,33 @@ const getList = async () => {
   return data;
 };
 
+const getById = async (userId: any) => {
+  const data = UserModel.findOne({
+    _id: userId,
+    deletedById: { $exists: false },
+  });
+  return data;
+};
+
+const updateById = async (userId: any, body: any) => {
+  const data = UserModel.findOneAndUpdate(
+    {
+      _id: userId,
+      deletedById: { $exists: false },
+    },
+    {
+      ...body,
+    },
+    {
+      new: true,
+    }
+  );
+  return data;
+};
+
 export const userService = {
   create,
   getList,
+  getById,
+  updateById,
 };

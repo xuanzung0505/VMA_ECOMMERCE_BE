@@ -4,6 +4,7 @@ import router from "./routes";
 import httpStatus from "http-status";
 import logger from "./utils/logger";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 
 const app = express();
 
@@ -13,7 +14,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 //cors
 app.use(cors());
-
+//cookie parser
+app.use(cookieParser());
 //api
 app.use("/api", router);
 

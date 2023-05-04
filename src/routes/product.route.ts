@@ -18,10 +18,17 @@ router
     productController.create
   );
 
-router.route("/:productId").get(
-  validate(productValidation.getById),
-  //
-  productController.getById
-);
+router
+  .route("/:productId")
+  .get(
+    validate(productValidation.getById),
+    //
+    productController.getById
+  )
+  .patch(
+    validate(productValidation.updateById),
+    //
+    productController.updateById
+  );
 
 export const productRouter = router;

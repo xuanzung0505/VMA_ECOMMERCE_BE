@@ -1,7 +1,7 @@
 import CategoryModel from "../models/category.model";
 import logger from "../utils/logger";
 
-const create = (body: any) => {
+const create = async (body: any) => {
   let category = new CategoryModel(body);
 
   // const category = categoryModel.findOneAndUpdate(filter, body, {

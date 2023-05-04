@@ -17,11 +17,11 @@ export interface UserDocument extends mongoose.Document {
 
 const userSchema = new mongoose.Schema(
   {
-    email: { type: String, require: true, unique: true },
-    name: { type: String, require: true },
-    tel: { type: String, require: true },
-    userType: { type: String, require: true },
-    password: { type: String, require: true },
+    email: { type: String, required: true, unique: true },
+    name: { type: String, required: true },
+    tel: { type: String, required: true },
+    userType: { type: String, required: true },
+    password: { type: String, required: true },
   },
   {
     timestamps: true,

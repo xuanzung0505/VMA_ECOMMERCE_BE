@@ -17,4 +17,17 @@ router
     userController.create
   );
 
+router
+  .route("/:userId") //
+  .get(
+    //
+    validate(userValidation.getById),
+    userController.getById
+  )
+  .patch(
+    //
+    validate(userValidation.updateById),
+    userController.updateById
+  );
+
 export const userRouter = router;

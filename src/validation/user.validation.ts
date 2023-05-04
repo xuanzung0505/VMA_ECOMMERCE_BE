@@ -1,8 +1,10 @@
-import { object, string } from "zod";
+import { boolean, object, string } from "zod";
 import { z } from "zod";
 
 import validator from "validator";
 import { USER_TYPE } from "../types/enumTypes";
+import { customValidations } from "./custom.validation";
+import logger from "../utils/logger";
 
 const create = object({
   body: object({
@@ -31,6 +33,35 @@ const create = object({
   }),
 });
 
+const getById = object({
+  params: object({
+    userId: string({ required_error: "userId is required" }).refine((data) => {
+      return customValidations.objectId(data, logger) === data;
+    }),
+  }),
+});
+
+const updateById = object({
+  params: object({
+    userId: string({ required_error: "userId is required" }).refine((data) => {
+      return customValidations.objectId(data, logger) === data;
+    }),
+  }),
+  body: object({
+    name: string().optional(),
+    tel: string()
+      .refine(validator.isMobilePhone, {
+        message: "invalid tel",
+        path: ["tel"],
+      })
+      .optional(),
+    email: string().email("Not a valid email").optional(),
+    userType: z.nativeEnum(USER_TYPE),
+  }),
+});
+
 export const userValidation = {
   create,
+  getById,
+  updateById,
 };
