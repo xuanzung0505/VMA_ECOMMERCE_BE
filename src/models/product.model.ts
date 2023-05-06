@@ -1,7 +1,10 @@
 import mongoose from "mongoose";
 import { paginate } from "./plugins";
-import { TABLE_CATEGORY, TABLE_PRODUCT } from "../config/table";
-import { categoryPopulateFields } from "../config/populateConfig";
+import { TABLE_CATEGORY, TABLE_PRODUCT, TABLE_USER } from "../config/table";
+import {
+  categoryPopulateFields,
+  userPopulateFields,
+} from "../config/populateConfig";
 
 export interface ProductDocument extends mongoose.Document {
   title: string;
@@ -12,6 +15,11 @@ export interface ProductDocument extends mongoose.Document {
     path: string;
   }>;
   categoryId: mongoose.Types.ObjectId;
+  attribute: Array<{
+    title: string;
+    value: Array<string>;
+  }>;
+  vendorId: mongoose.Types.ObjectId;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -26,6 +34,18 @@ const productSchema = new mongoose.Schema(
     categoryId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: TABLE_CATEGORY,
+      required: true,
+    },
+    attribute: {
+      type: Array<{
+        title: string;
+        value: Array<string>;
+      }>,
+      required: false,
+    },
+    vendorId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: TABLE_USER,
       required: true,
     },
   },
@@ -49,11 +69,22 @@ productSchema.virtual("category", {
   justOne: true,
 });
 
+productSchema.virtual("vendor", {
+  ref: TABLE_USER,
+  localField: "vendorId",
+  foreignField: "_id",
+  justOne: true,
+});
+
 //populate for virtual
 const populateArr = [
   {
     path: "category",
     select: categoryPopulateFields,
+  },
+  {
+    path: "vendor",
+    select: userPopulateFields,
   },
 ];
 

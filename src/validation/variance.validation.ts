@@ -5,48 +5,29 @@ import { isNull, isNumber, isUndefined } from "lodash";
 
 const create = object({
   body: object({
-    title: string({
-      required_error: "title is required",
-    }),
     unitPrice: number({
       required_error: "unitPrice is required",
     }),
     quantity: number({
       required_error: "quantity is required",
     }),
-    logo: string({
-      required_error: "logo is required",
-    }),
-    imgPath: array(
-      object(
-        {
-          path: string(),
-        },
-        { required_error: "path is required" }
-      )
-    ),
-    categoryId: string({
-      required_error: "categoryId is required",
+    productId: string({
+      required_error: "productId is required",
     }).refine((data) => {
       return customValidations.objectId(data, logger) === data;
     }),
     attribute: array(
       object({
         title: string({ required_error: "attribute title is required" }),
-        value: array(string()),
+        value: string(),
       })
     ),
-    vendorId: string({
-      required_error: "vendorId is required",
-    }).refine((data) => {
-      return customValidations.objectId(data, logger) === data;
-    }),
   }),
 });
 
 const getList = object({
   query: object({
-    categoryId: string()
+    productId: string()
       .refine(
         (data) => {
           return customValidations.objectId(data, logger) === data;
@@ -56,33 +37,14 @@ const getList = object({
         }
       )
       .optional(),
-    maxPrice: string()
-      // .refine(
-      //   (data: any) => {
-      //     return !isNaN(data);
-      //   },
-      //   {
-      //     message: "maxPrice is not a valid number",
-      //   }
-      // )
-      .optional(),
-    minPrice: string()
-      // .refine(
-      //   (data: any) => {
-      //     return !isNaN(data);
-      //   },
-      //   {
-      //     message: "minPrice is not a valid number",
-      //   }
-      // )
-      .optional(),
+    attribute: string().optional(),
   }),
 });
 
 const getById = object({
   params: object({
-    productId: string({
-      required_error: "productId is required",
+    varianceId: string({
+      required_error: "varianceId is required",
     }).refine(
       (data) => {
         return customValidations.objectId(data, logger) === data;
@@ -96,8 +58,8 @@ const getById = object({
 
 const updateById = object({
   params: object({
-    productId: string({
-      required_error: "productId is required",
+    varianceId: string({
+      required_error: "varianceId is required",
     }).refine(
       (data) => {
         return customValidations.objectId(data, logger) === data;
@@ -108,38 +70,24 @@ const updateById = object({
     ),
   }),
   body: object({
-    title: string().optional(),
     unitPrice: number().optional(),
     quantity: number().optional(),
-    logo: string().optional(),
-    imgPath: array(
-      object(
-        {
-          path: string(),
-        },
-        { required_error: "path is required" }
-      )
-    ).optional(),
-    categoryId: string()
+    productId: string()
       .refine((data) => {
         return customValidations.objectId(data, logger) === data;
       })
       .optional(),
-    vendorId: string()
-      .refine((data) => {
-        return customValidations.objectId(data, logger) === data;
-      })
-      .optional(),
+
     attribute: array(
       object({
         title: string({ required_error: "attribute title is required" }),
-        value: array(string()),
+        value: string(),
       })
     ).optional(),
   }),
 });
 
-export const productValidation = {
+export const varianceValidation = {
   create,
   getList,
   getById,

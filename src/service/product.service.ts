@@ -56,13 +56,25 @@ const getList = async (filter: any, options: any) => {
 
   console.log({ ...filter });
 
-  const data = ProductModel.paginate(
+  const data = await ProductModel.paginate(
     {
       ...filter,
       //
     },
     { ...options }
   );
+
+  // console.log(data);
+  // const arr = await data.docs;
+  // console.log(arr);
+
+  // arr.map((value: any, index: any) => {
+  //   // console.log(value);
+  //   if (index % 2 == 0)
+  //     updateById(value._id, { vendorId: "6456c9e49aafa716e134a914" });
+  //   else updateById(value._id, { vendorId: "643fc64bf7e940bccfef8544" });
+  // });
+
   return data;
 };
 
