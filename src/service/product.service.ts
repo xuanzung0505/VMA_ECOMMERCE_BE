@@ -1,5 +1,6 @@
 import ProductModel from "../models/product.model";
 import logger from "../utils/logger";
+import { varianceService } from "./variance.service";
 
 const create = async (body: any) => {
   let product = new ProductModel(body);
@@ -64,15 +65,18 @@ const getList = async (filter: any, options: any) => {
     { ...options }
   );
 
-  // console.log(data);
-  // const arr = await data.docs;
-  // console.log(arr);
+  const arr = data.docs;
 
   // arr.map((value: any, index: any) => {
   //   // console.log(value);
-  //   if (index % 2 == 0)
-  //     updateById(value._id, { vendorId: "6456c9e49aafa716e134a914" });
-  //   else updateById(value._id, { vendorId: "643fc64bf7e940bccfef8544" });
+  //   if (value.imgPath.length == 0) {
+  //     let imgPath = [
+  //       {
+  //         path: value.logo,
+  //       },
+  //     ];
+  //     updateById(value._id, { imgPath });
+  //   }
   // });
 
   return data;

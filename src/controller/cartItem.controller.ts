@@ -11,7 +11,8 @@ const create = catchAsync(async (req: Request, res: Response) => {
 });
 
 const getList = catchAsync(async (req: Request, res: Response) => {
-  // console.log(req.query);
+  // console.log("req.user");
+  // console.log(req.user);
   const options = pick(req.query, ["sortBy", "limit", "page"]);
   const filter = pick(req.query, ["userId", "varianceId"]);
   const data = await cartItemService.getList(filter, options);
@@ -42,9 +43,23 @@ const updateById = catchAsync(async (req: Request, res: Response) => {
   return res.send(data);
 });
 
+const deleteById = catchAsync(async (req: Request, res: Response) => {
+  const data = await cartItemService.deleteById(
+    req.params.cartItemId,
+    req.body
+  );
+  if (!data) {
+    throw new Error(
+      `${httpStatus.NOT_FOUND}:${ExceptionCode.CART_ITEM_NOT_FOUND}`
+    );
+  }
+  return res.send(data);
+});
+
 export const cartItemController = {
   create,
   getList,
   getById,
   updateById,
+  deleteById,
 };

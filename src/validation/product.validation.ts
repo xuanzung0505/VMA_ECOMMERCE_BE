@@ -41,6 +41,7 @@ const create = object({
     }).refine((data) => {
       return customValidations.objectId(data, logger) === data;
     }),
+    ...customValidations.createEntityValidation,
   }),
 });
 
@@ -136,6 +137,7 @@ const updateById = object({
         value: array(string()),
       })
     ).optional(),
+    ...customValidations.updateEntityValidation,
   }),
 });
 

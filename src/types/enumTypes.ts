@@ -3,3 +3,7 @@ export enum USER_TYPE {
   CUSTOMER = "CUSTOMER",
   VENDOR = "VENDOR",
 }
+
+export enum RequestParams {
+  USERID = "userId",
+}

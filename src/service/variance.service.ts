@@ -23,10 +23,19 @@ const create = async (body: any) => {
 };
 
 const getList = async (filter: any, /*filterBody: any,*/ options: any) => {
+  // console.log(filter);
   if (!!filter.attribute) {
     filter.attribute = stringToArray(filter.attribute);
+    let attribute;
 
-    const attribute = { $all: filter.attribute };
+    // console.log(typeof filter.attribute);
+    // console.log(filter.attribute.length);
+    // console.log(typeof JSON.stringify(filter.attribute));
+
+    if (JSON.stringify(filter.attribute) === "[]") {
+      attribute = filter.attribute;
+      // console.log(typeof attribute);
+    } else attribute = { $all: filter.attribute };
     filter.attribute = attribute;
     // console.log(filter.attribute);
   }

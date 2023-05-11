@@ -11,8 +11,13 @@ export interface UserDocument extends mongoose.Document {
   tel: string;
   userType: string;
   password: string;
+  avatar: string;
   createdAt: Date;
   updatedAt: Date;
+  deletedAt: Date;
+  createdById: mongoose.Types.ObjectId;
+  updatedById: mongoose.Types.ObjectId;
+  deletedById: mongoose.Types.ObjectId;
 }
 
 const userSchema = new mongoose.Schema(
@@ -22,6 +27,23 @@ const userSchema = new mongoose.Schema(
     tel: { type: String, required: true },
     userType: { type: String, required: true },
     password: { type: String, required: true },
+    avatar: { type: String, required: false },
+    deletedAt: { type: Date, required: false },
+    createdById: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: TABLE_USER,
+      required: false,
+    },
+    updatedById: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: TABLE_USER,
+      required: false,
+    },
+    deletedById: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: TABLE_USER,
+      required: false,
+    },
   },
   {
     timestamps: true,

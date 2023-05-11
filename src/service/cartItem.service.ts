@@ -3,6 +3,7 @@ import logger from "../utils/logger";
 
 const create = async (body: any) => {
   let cartItem = new CartItemModel(body);
+  // let cartItem = CartItemModel.create(body);
 
   // const cartItem = cartItemModel.findOneAndUpdate(filter, body, {
   //   new: true,
@@ -26,6 +27,7 @@ const getList = async (filter: any, /*filterBody: any,*/ options: any) => {
       ...filter,
       //
       // ...filterBody,
+      deletedById: { $exists: false },
     },
     { ...options }
   );
@@ -62,9 +64,26 @@ const updateById = async (cartItemId: any, body: any) => {
   return data;
 };
 
+const deleteById = async (cartItemId: any, body: any) => {
+  const data = CartItemModel.findOneAndUpdate(
+    {
+      _id: cartItemId,
+      deletedById: { $exists: false },
+    },
+    {
+      ...body,
+    },
+    {
+      new: true,
+    }
+  );
+  return data;
+};
+
 export const cartItemService = {
   create,
   getList,
   getById,
   updateById,
+  deleteById,
 };

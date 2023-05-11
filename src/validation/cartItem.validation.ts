@@ -76,22 +76,32 @@ const updateById = object({
   }),
   body: object({
     quantity: number().optional(),
-    // varianceId: string()
-    //   .refine((data) => {
-    //     return customValidations.objectId(data, logger) === data;
-    //   })
-    //   .optional(),
-    // userId: string()
-    //   .refine((data) => {
-    //     return customValidations.objectId(data, logger) === data;
-    //   })
-    //   .optional(),
+    ...customValidations.updateEntityValidation,
   }),
 });
 
+const deleteById = object({
+  params: object({
+    cartItemId: string({
+      required_error: "cartItemId is required",
+    }).refine(
+      (data) => {
+        return customValidations.objectId(data, logger) === data;
+      },
+      {
+        message: "must be a valid mongo id",
+      }
+    ),
+  }),
+  body: object({
+    quantity: number().optional(),
+    ...customValidations.deleteEntityValidation,
+  }),
+});
 export const cartItemValidation = {
   create,
   getList,
   getById,
   updateById,
+  deleteById,
 };

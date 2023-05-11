@@ -10,11 +10,11 @@ import { authService } from "../service/auth.service";
 const login = catchAsync(async (req: Request, res: Response) => {
   // logger.info(req.body);
   const data = await authService.login(req.body);
-  if (!!data.user) {
-    res.cookie("token", data.token, {
-      httpOnly: true,
-    });
-  }
+  // if (!!data.user) {
+  //   res.cookie("token", data.token, {
+  //     httpOnly: true,
+  //   });
+  // }
   return res.send(data);
 });
 

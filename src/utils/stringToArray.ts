@@ -8,6 +8,10 @@ export const stringToArray = (s: string) => {
   let res;
 
   const result: any = [];
+  // console.log("arr");
+  // console.log(arr);
+
+  if (JSON.stringify(result) === s) return result;
 
   arr.map((item: any, index: any) => {
     //slice:

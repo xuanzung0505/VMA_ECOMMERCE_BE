@@ -17,6 +17,10 @@ export interface CartItemDocument extends mongoose.Document {
   userId: mongoose.Types.ObjectId;
   createdAt: Date;
   updatedAt: Date;
+  deletedAt: Date;
+  createdById: mongoose.Types.ObjectId;
+  updatedById: mongoose.Types.ObjectId;
+  deletedById: mongoose.Types.ObjectId;
 }
 
 const cartItemSchema = new mongoose.Schema(
@@ -31,6 +35,22 @@ const cartItemSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: TABLE_USER,
       required: true,
+    },
+    deletedAt: { type: Date, required: false },
+    createdById: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: TABLE_USER,
+      required: false,
+    },
+    updatedById: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: TABLE_USER,
+      required: false,
+    },
+    deletedById: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: TABLE_USER,
+      required: false,
     },
   },
   {
@@ -80,6 +100,17 @@ cartItemSchema.pre("find", function () {
 
 cartItemSchema.pre("findOne", function () {
   this.populate(populateArr);
+});
+
+cartItemSchema.post("save", function (doc: CartItemDocument, next: any) {
+  // console.log("post Save");
+  if (!!doc) {
+    doc.populate(populateArr).then(() => {
+      next();
+    });
+  } else {
+    next();
+  }
 });
 
 const CartItemModel = mongoose.model(TABLE_CART_ITEM, cartItemSchema);

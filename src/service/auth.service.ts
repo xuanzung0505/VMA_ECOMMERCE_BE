@@ -11,7 +11,7 @@ const login = async (body: any) => {
 
   const user = await UserModel.findOne({
     email: email,
-    deletedById: { $exist: false },
+    deletedById: { $exists: false },
   });
   // console.log(user);
   if (!!user) {

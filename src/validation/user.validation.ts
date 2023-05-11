@@ -33,6 +33,10 @@ const create = object({
   }),
 });
 
+const getList = object({
+  userType: z.nativeEnum(USER_TYPE).optional(),
+});
+
 const getById = object({
   params: object({
     userId: string({ required_error: "userId is required" }).refine((data) => {
@@ -56,12 +60,15 @@ const updateById = object({
       })
       .optional(),
     email: string().email("Not a valid email").optional(),
-    userType: z.nativeEnum(USER_TYPE),
+    userType: z.nativeEnum(USER_TYPE).optional(),
+    avatar: string().optional(),
+    ...customValidations.updateEntityValidation,
   }),
 });
 
 export const userValidation = {
   create,
+  getList,
   getById,
   updateById,
 };
